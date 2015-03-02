@@ -30,6 +30,13 @@
 		document.getElementById('suma').value = total;
 		document.getElementById('dolares').value = total*rate;
 	}
+	window.onload = function () {
+		document.getElementById('suma').value = "";
+		document.getElementById('dolares').value = "";
+		document.getElementById('tasa').value = "";
+		document.getElementById('idcliente').value = "";
+		document.getElementById('delivery').value = "";
+	}
 </script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

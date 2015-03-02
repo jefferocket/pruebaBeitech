@@ -166,6 +166,6 @@ public class HomeController {
 		model.addAttribute("clientes",clientes);
 		model.addAttribute("tasa",tsReciente);
 
-		return "ordenesform";
+		return "valido";
 	}
 }

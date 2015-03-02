@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Valido</title>
 </head>
 <body>
-
+<h1> Orden Ingresada Exitosamente<h1>
+<jsp:include page="ordenesform.jsp"></jsp:include>
 </body>
 </html>
