@@ -76,6 +76,7 @@ public class HomeController {
 	public ModelAndView seleccionUsuario() {
 		Customer selectedClient = new Customer(); 
 		ModelAndView model = new ModelAndView("seleccionusuario");
+		
 		List<Customer> clientes = daoClientes.clientes();
 		model.addObject("selectedClient", selectedClient);
 		model.addObject("clientes", clientes);
@@ -112,5 +113,25 @@ public class HomeController {
 		daoClientes.insertarClienteProductos(cliente);
 		
 		return "home";
+	}
+	
+	@RequestMapping(value = "/ordenesform", method = RequestMethod.GET)
+	public ModelAndView ordenesForm(HttpServletRequest requ) {
+		
+		ModelAndView model = new ModelAndView("ordenesform");
+		
+		/*List<Product> productos = daoProductos.products();
+		String indices[] = new String[productos.size()];
+		for (int i = 0; i < indices.length; i++) {
+			indices[i] = ""+productos.get(i).getId();
+		}
+		List<Customer> clientes = daoClientes.clientes();
+		model.addObject("clientes",clientes);
+		model.addObject("productos", productos);
+		model.addObject("indices", indices);
+		
+		*/model.addObject("mensaje", "Hola" );
+		
+		return model;
 	}
 }

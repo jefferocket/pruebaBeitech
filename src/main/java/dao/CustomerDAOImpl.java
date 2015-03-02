@@ -23,7 +23,10 @@ public class CustomerDAOImpl implements CustomerDAO{
 	@Override
 	public List<Customer> clientes() {
 		// TODO Auto-generated method stub
-		String query = "select * from customer";
+		String query = "SELECT DISTINCT c.customer_id , c.name, c.email, ap.product_id"
+				+ "  FROM customer c"
+				+ "  LEFT OUTER JOIN avaible_products ap"
+				+ " ON c.customer_id = ap.customer_id ";
 		ResultSet rs;
 		List<Customer> clientes = new ArrayList<Customer>();
 		try {
@@ -34,13 +37,41 @@ public class CustomerDAOImpl implements CustomerDAO{
 				carga.setId(rs.getInt("customer_id"));
 				carga.setName(rs.getString("name"));
 				carga.setEmail(rs.getString("email"));
-				clientes.add(carga);
+				String id_pro = rs.getString("product_id");
+				int pos = clienteExiste(clientes, carga.getId()); 
+				if (pos < 0) {
+					if(id_pro != null){
+						String arr[] = {id_pro};
+						carga.setAvaible_products(arr);
+						clientes.add(carga);
+					}
+				} else {
+					String arr[] = clientes.get(pos).getAvaible_products();
+					String nuevo[] = new String [arr.length +1];
+					for (int i = 0; i < nuevo.length; i++) {
+						if(i <= arr.length-1)
+							nuevo[i] = arr[i];
+						else
+							nuevo[i] = id_pro;
+					}
+					clientes.get(pos).setAvaible_products(nuevo);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return clientes;
+	}
+	private int clienteExiste(List<Customer> lista, int id){
+		int i = 0;
+		for (Customer customer : lista) {
+			if(customer.getId() == id)
+				return i;
+			i++;
+		}
+		return -1;
 	}
 	@Override
 	public Customer findById(int id) {
