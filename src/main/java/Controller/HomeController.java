@@ -122,7 +122,9 @@ public class HomeController {
 
 		ModelAndView model = new ModelAndView("ordenesform");
 		List<Customer> clientes = daoClientes.clientes();
+		float tsReciente= daoTasa.tasaReciente();
 		model.addObject("clientes",clientes);
+		model.addObject("tasa",tsReciente);
 
 		return model;
 	}

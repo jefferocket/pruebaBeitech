@@ -9,7 +9,9 @@
 	src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script type="text/javaScript">
 	var total = 0;
-	function clienteSeleccionado(x) {
+	var rate = 0;
+	function clienteSeleccionado(x,ts) {
+		rate = ts;
 		$.ajax({
             url : 'loadcliente/'+x,
             success : function(data) {
@@ -17,11 +19,15 @@
             }
         });
 		total = 0;
+		document.getElementById('suma').value = total;
+		document.getElementById('tasa').value = rate;
+		document.getElementById('dolares').value = total*rate;
 	}
 	
 	function sumarTotal(x) {
 		total += x;
-		document.getElementById('suma').innerHTML = total;
+		document.getElementById('suma').value = total;
+		document.getElementById('dolares').value = total*rate;
 	}
 </script>
 <head>
@@ -30,6 +36,7 @@
 
 </head>
 <body>
+
 	<h1>Crear orden</h1>
 	<div id="cliente">
 		<strong>Seleccione un Cliente:</strong>
@@ -37,7 +44,7 @@
 			<select>
 				<c:forEach var="customer" items="${clientes}">
 					<option value="${customer.id}"
-						onclick="clienteSeleccionado(${customer.id})">${customer.name}</option>
+						onclick="clienteSeleccionado(${customer.id},${tasa})">${customer.name}</option>
 				</c:forEach>
 			</select>
 		</c:if>
@@ -45,9 +52,21 @@
 	<br>
 	<div id="productos"></div>
 	<br>
-	<form action="">
-		Total Euros: <p id="suma"></p>
-		<input type="submit" value="Submit">
-	</form>
+	<table>
+		<form action="agregarOrden" method="post">
+			<tr>
+				<td>Total Euros: <input type="text" id="suma" disabled></td>
+			</tr>
+			<tr>
+				<td>Tasa de cambio: <input type="text" id="tasa" disabled></td>
+			</tr>
+			<tr>
+				<td>Total Dolar: <input type="text" id="dolares" disabled></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Crear Orden"></td>
+			</tr>
+		</form>
+	</table>
 </body>
 </html>
