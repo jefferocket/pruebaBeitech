@@ -138,9 +138,10 @@ public class HomeController {
 			String products[] = cliente.getAvaible_products();
 			for (String id : products) {
 				Product disponible = daoProductos.findById(Integer.parseInt(id));
-				result +="<tr><form><td><label id=\""+disponible.getId()
+				result +="<tr><form ><td><label id=\""+disponible.getId()
 						+ "\">"+disponible.getName()
-						+ "</label></td><td><input type=\"submit\" value=\"Agregar\"></input></td></form></tr>"; 
+						+ "</label></td><td><input type=\"submit\" onclick= \"sumarTotal("+disponible.getPrice()
+						+ ")\" value=\"Agregar\"></input></td></form></tr>"; 
 			}
 			result+="</table><br>";
 		}
