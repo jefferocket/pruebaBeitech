@@ -14,7 +14,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 
 	private Connection conn;
 	private Statement stmt;
-	
+
 	public CustomerDAOImpl(Connection conexion) throws SQLException {
 		// TODO Auto-generated constructor stub
 		conn = conexion; 
@@ -31,7 +31,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 		List<Customer> clientes = new ArrayList<Customer>();
 		try {
 			rs = stmt.executeQuery(query);
-			
+
 			while(rs.next()){
 				Customer carga = new Customer();
 				carga.setId(rs.getInt("customer_id"));
@@ -61,7 +61,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return clientes;
 	}
 	private int clienteExiste(List<Customer> lista, int id){
@@ -85,28 +85,32 @@ public class CustomerDAOImpl implements CustomerDAO{
 
 		try {
 			rs = stmt.executeQuery(query);
-			List<Integer> productsId = new ArrayList<Integer>();
+			
 			while(rs.next()){
 				if(buscar == null){
 					buscar = new Customer();
 					buscar.setId(rs.getInt("customer_id"));
 					buscar.setName(rs.getString("name"));
 					buscar.setEmail(rs.getString("email"));
+					String product_id = String.valueOf(rs.getInt("product_id"));
+					if(product_id != null){
+						String values[] = {product_id};
+						buscar.setAvaible_products(values);
+					}else{
+						buscar.setAvaible_products(null);
+					}
 				}else{
-					int product_id = rs.getInt("product_id"); 
-					if( product_id > 0){
-						productsId.add(product_id);
+					String product_id = String.valueOf(rs.getInt("product_id"));
+					String arr[] = buscar.getAvaible_products();
+					String nuevo[] = new String[buscar.getAvaible_products().length + 1];
+					for (int i = 0; i < nuevo.length; i++) {
+						if(i <= arr.length-1)
+							nuevo[i] = arr[i];
+						else
+							nuevo[i] = product_id;
 					}
+					buscar.setAvaible_products(nuevo);
 				}
-				if (buscar != null) {
-					int arr[] = new int[productsId.size()];
-					int cont=0;
-					for (Integer integer : productsId) {
-						arr[cont] = integer.intValue();
-						cont++;
-					}
-				}
-				
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -128,6 +132,26 @@ public class CustomerDAOImpl implements CustomerDAO{
 				e.printStackTrace();
 			}
 		}
+	}
+	@Override
+	public List<Customer> allCustomer() {
+		String query = "select * from customer;";
+		List<Customer> clientes = null;
+		try {
+			clientes = new ArrayList<Customer>();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Customer cliente = new Customer();
+				cliente.setId(rs.getInt("customer_id"));
+				cliente.setName(rs.getString("name"));
+				cliente.setEmail(rs.getString("email"));
+				clientes.add(cliente);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return clientes;
 	}
 
 }

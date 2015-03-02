@@ -7,13 +7,7 @@
 </head>
 <body>
 	<h1>Selección de Productos para : ${cliente.name}</h1>
-
-
-	<c:choose>
-		<c:when test="${not empty cliente.avaible_products}">
-			<c:out value="Vacio"> jjskjsa </c:out>
-		</c:when>
-		<c:otherwise>
+	
 			<form:form method="get" action="agregarproductos"
 				commandName="cliente">
 				<table>
@@ -22,7 +16,7 @@
 
 					<c:forEach items="${productos}" var="product">
 						<tr>
-							<td><form:checkbox path="${cliente.avaible_products}"
+							<td><form:checkbox path=""
 									name="lista" value="${product.id}" /> ${product.name}</td>
 						</tr>
 					</c:forEach>
@@ -31,10 +25,5 @@
 					</tr>
 				</table>
 			</form:form>
-
-		</c:otherwise>
-	</c:choose>
-
-
 </body>
 </html>
