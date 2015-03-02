@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import Conexion.Conectar;
+import Model.Actualizador;
 import Model.Customer;
 import Model.Product;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
+import dao.ExchangeDAOImpl;
 import dao.ProductDAO;
 import dao.ProductDAOImpl;
 
@@ -35,6 +37,7 @@ public class HomeController {
 	
 	private ProductDAO daoProductos;
 	private CustomerDAO daoClientes;
+	private ExchangeDAOImpl daoTasa;
 	
 	public void iniciar() {
 		// TODO Auto-generated constructor stub
@@ -42,6 +45,9 @@ public class HomeController {
 			Conectar con = new Conectar();
 			daoProductos = new ProductDAOImpl(con.getConnection());
 			daoClientes = new CustomerDAOImpl(con.getConnection());
+			daoTasa = new ExchangeDAOImpl(con.getConnection());
+			Thread mecanismo = new Actualizador(daoTasa);
+			mecanismo.start();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
