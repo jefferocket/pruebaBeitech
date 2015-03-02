@@ -22,10 +22,14 @@ import org.springframework.web.servlet.ModelAndView;
 import Conexion.Conectar;
 import Model.Actualizador;
 import Model.Customer;
+import Model.Orden;
 import Model.Product;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
+import dao.ExchangeDAO;
 import dao.ExchangeDAOImpl;
+import dao.OrdenDAO;
+import dao.OrdenDAOImpl;
 import dao.ProductDAO;
 import dao.ProductDAOImpl;
 
@@ -39,7 +43,8 @@ public class HomeController {
 
 	private ProductDAO daoProductos;
 	private CustomerDAO daoClientes;
-	private ExchangeDAOImpl daoTasa;
+	private ExchangeDAO daoTasa;
+	private OrdenDAO daoOrden;
 
 	public void iniciar() {
 		// TODO Auto-generated constructor stub
@@ -50,6 +55,7 @@ public class HomeController {
 			daoTasa = new ExchangeDAOImpl(con.getConnection());
 			Thread mecanismo = new Actualizador(daoTasa);
 			mecanismo.start();
+			daoOrden = new OrdenDAOImpl(con.getConnection());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,6 +131,7 @@ public class HomeController {
 		float tsReciente= daoTasa.tasaReciente();
 		model.addObject("clientes",clientes);
 		model.addObject("tasa",tsReciente);
+		model.addObject("orden", new Orden());
 
 		return model;
 	}
@@ -140,7 +147,7 @@ public class HomeController {
 			String products[] = cliente.getAvaible_products();
 			for (String id : products) {
 				Product disponible = daoProductos.findById(Integer.parseInt(id));
-				result +="<tr><form ><td><label id=\""+disponible.getId()
+				result +="<h3></h3><tr><form ><td><label id=\""+disponible.getId()
 						+ "\">"+disponible.getName()
 						+ "</label></td><td><input type=\"submit\" onclick= \"sumarTotal("+disponible.getPrice()
 						+ ")\" value=\"Agregar\"></input></td></form></tr>"; 
@@ -148,6 +155,17 @@ public class HomeController {
 			result+="</table><br>";
 		}
 		return result;  
+	}
+	
+	@RequestMapping(value = "/agregarOrden", method = RequestMethod.POST)
+	public String almacenarOrden(@ModelAttribute(value="orden") Orden orden, Model model) {
+		System.out.print(true);
+		daoOrden.insertar(orden);
+		List<Customer> clientes = daoClientes.clientes();
+		float tsReciente= daoTasa.tasaReciente();
+		model.addAttribute("clientes",clientes);
+		model.addAttribute("tasa",tsReciente);
 
+		return "ordenesform";
 	}
 }

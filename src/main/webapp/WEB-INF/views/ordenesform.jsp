@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <script type="text/javascript"
@@ -54,26 +54,27 @@
 	<div id="productos"></div>
 	<br>
 	<table>
-		<form action="agregarOrden" method="post">
+		<form:form modelAttribute="orden" action="agregarOrden" method="POST">
 			<tr>
-				<td>Total Euros: <input type="text" id="suma" disabled></td>
+				<td>Total Euros: <form:input path="euros" id="suma" /><!--input type="text" id="suma" disabled--></td>
 			</tr>
 			<tr>
-				<td>Tasa de cambio: <input type="text" id="tasa" disabled></td>
+				<td>Tasa de cambio: <form:input path="tasa" type="text" id="tasa" /><!--input type="text" id="tasa" disabled--></td>
 			</tr>
 			<tr>
-				<td>Total Dolar: <input type="text" id="dolares" disabled></td>
+				<td>Total Dolar: <form:input path="dolares" type="text" id="dolares" /><!--input type="text" id="dolares" disabled--></td>
 			</tr>
 			<tr>
-				<td><input type="hidden" id="idcliente" value="data1"></td>
+				<td><form:hidden path="idCliente" id="idcliente"/><!--<input type="hidden" id="idcliente" value="data1"--></td>
 			</tr>
 			<tr>
-				<td>Direccion entrega<input type="text" id="delivery" required></td>
+				<td>Direccion entrega: <!-- <input type="text" id="delivery" required> -->
+				<form:input path="delivery" id="delivery" required="true"/></td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Crear Orden"></td>
 			</tr>
-		</form>
+		</form:form>
 	</table>
 </body>
 </html>
