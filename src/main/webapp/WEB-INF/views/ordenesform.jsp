@@ -22,6 +22,7 @@
 		document.getElementById('suma').value = total;
 		document.getElementById('tasa').value = rate;
 		document.getElementById('dolares').value = total*rate;
+		document.getElementById('idcliente').value = x;
 	}
 	
 	function sumarTotal(x) {
@@ -62,6 +63,12 @@
 			</tr>
 			<tr>
 				<td>Total Dolar: <input type="text" id="dolares" disabled></td>
+			</tr>
+			<tr>
+				<td><input type="hidden" id="idcliente" value="data1"></td>
+			</tr>
+			<tr>
+				<td>Direccion entrega<input type="text" id="delivery" required></td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Crear Orden"></td>
