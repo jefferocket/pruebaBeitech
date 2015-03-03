@@ -6,10 +6,9 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	Prueba Jefferson  
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
 
 <ul type="circle">
             <li><a href="seleccionUsuario.htm">Seleccionar Productos</a></li>
