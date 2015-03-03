@@ -162,4 +162,9 @@ public class HomeController {
 
 		return "valido";
 	}
+	
+	@RequestMapping(value = "/formFechas", method = RequestMethod.GET)
+	public String formFechas() {
+		return "formFechas";
+	}
 }

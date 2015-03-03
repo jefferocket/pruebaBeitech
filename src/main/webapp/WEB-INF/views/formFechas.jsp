@@ -33,10 +33,11 @@
 <body>
 
 	<h1>Seleccione el rango</h1>
-	<form method="get" action="service">
+	<form method="get" action="service/servicefechas">
 		<label for="from">DESDE</label> <input type="text" id="from"
 			name="from"> <label for="to">HASTA</label> <input type="text"
-			id="to" name="to"> <input type="submit" value="Consultar">
+			id="to" name="to"><br> <br> <input type="submit" value="Consultar">
 	</form>
+	
 </body>
 </html>
