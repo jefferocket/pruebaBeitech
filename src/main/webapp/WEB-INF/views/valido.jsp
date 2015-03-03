@@ -9,5 +9,8 @@
 <body>
 <h1> Orden Ingresada Exitosamente<h1>
 <jsp:include page="ordenesform.jsp"></jsp:include>
+
+
+<a href="home.htm">Regresar a home</a>
 </body>
 </html>

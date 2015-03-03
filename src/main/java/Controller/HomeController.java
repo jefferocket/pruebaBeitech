@@ -43,6 +43,9 @@ public class HomeController {
 	private ExchangeDAO daoTasa;
 	private OrdenDAO daoOrden;
 
+	public HomeController(){
+		iniciar();
+	}
 	public void iniciar() {
 		// TODO Auto-generated constructor stub
 		try {
@@ -63,10 +66,12 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		iniciar();
 		return "home";
 	}
-
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home2(Locale locale, Model model) {
+		return "home";
+	}
 	@RequestMapping(value = "/seleccionUsuario", method = RequestMethod.GET)
 	public ModelAndView seleccionUsuario() {
 		Customer selectedClient = new Customer(); 
